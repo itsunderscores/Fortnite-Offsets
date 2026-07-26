@@ -1,5 +1,7 @@
 bool IsEnemyVisible(uintptr_t Mesh) {
-	auto Seconds = kernel->read_t<double>(cache::UWorld + offsets::CameraRotation + 0x10);
-	auto LastRenderTime = kernel->read_t<float>(Mesh + offsets::LastRenderTime);
-	return Seconds - LastRenderTime <= 0.06f;
+	auto Seconds = memory.read<double>(cache::uworld + offsets::core::Seconds);
+	auto LastRenderTime = memory.read<float>(mesh + offsets::core::LastRenderTime);
+	if (Seconds - LastRenderTime > 0.06f) return false;
+
+	return true;
 }
