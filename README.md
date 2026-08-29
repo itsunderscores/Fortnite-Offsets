@@ -19,6 +19,12 @@ Up-to-date Unreal Engine offsets for Fortnite, dumped as both a C++ header (`off
 - [How to use](#how-to-use)
 - [Main offsets](#main-offsets)
   - [Core / world](#core--world)
+    - [Globals](#globals)
+    - [World chain](#world-chain)
+    - [Actor / component](#actor--component)
+    - [Mesh / bones](#mesh--bones)
+    - [Camera / view](#camera--view)
+    - [Misc actor checks](#misc-actor-checks)
   - [Player](#player)
   - [Weapon](#weapon)
   - [Aim](#aim)
@@ -63,110 +69,149 @@ If you load offsets at runtime instead of compiling them in, parse `offsets.json
 
 ## Main offsets
 
-Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative to the game module base. Everything else is a class member offset.
+Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative to the game module base. Everything else is a class member offset. Labels use Unreal names (`Class::Member`).
 
 ### Core / world
 
-| Name | Offset | Notes |
+#### Globals
+
+| Name | Offset | Label |
 |---|---|---|
-| **UWorld** | `0x1B315998` | Global. `base + UWORLD` |
-| **UEngine** (`gEngine`) | `0x1B3172F8` | Global. `base + gEngine` |
-| **GameViewport** | `0xB70` | `UEngine` → `GameViewport` |
-| **GameInstance** | `0x248` | `UWorld` → `GameInstance` |
-| **GameState** | `0x1D0` | `UWorld` → `GameState` |
-| **RootComponent** | `0x1B0` | Actor → `RootComponent` |
-| **ComponentToWorld** | `0x1E0` | Component → world transform |
-| **BoneArray** | `0x660` | Mesh bone array |
-| **BoneArray_cache** | `0x670` | Cached bone array |
-| **PlayerArray** | `0x288` | `GameState` → players |
-| **RelativeLocation** | `0x140` | Component relative location |
-| **Location pointer** | `0x170` | `UWorld` camera location ptr |
-| **Rotation pointer** | `0x180` | `UWorld` camera rotation ptr |
-| **Seconds** | `0x190` | `UWorld` world time (double) |
-| **FOV** | `0x374` | `PlayerController` FOV |
-| **ServerWorldTime** | `0x2A0` | Server world time |
-| **LastRenderTime** | `0x338` | Mesh last render (visibility) |
-| **PersistentLevel** | `0x38` | `UWorld` → persistent level |
-| **Levels** | `0x1E8` | `UWorld` → levels |
-| **Actors** | `0x210` | Level → actor array |
-| **ReviveFromDBNOTime** | `0x4A78` | DBNO revive timer |
-| **LifespanAfterDeath** | `0x10A8` | Time after death |
-| **ServerCriticalHealth** | `0x1BFC` | Critical health |
-| **CachedComponentSpaceTransforms** | `0x9D0` | Cached component transforms |
-| **CurrentReadComponentTransforms** | `0x48` | Current read transforms |
+| **UWorld** | `0x1B315998` | Global `GWorld` pointer — `base + UWORLD` |
+| **UEngine** (`gEngine`) | `0x1B3172F8` | Global `GEngine` pointer — `base + gEngine` |
+
+#### World chain
+
+| Name | Offset | Label |
+|---|---|---|
+| **GameViewport** | `0xB70` | `UEngine::GameViewport` |
+| **GameInstance** | `0x248` | `UWorld::OwningGameInstance` |
+| **GameState** | `0x1D0` | `UWorld::GameState` |
+| **PersistentLevel** | `0x38` | `UWorld::PersistentLevel` |
+| **Levels** | `0x1E8` | `UWorld::Levels` |
+| **Actors** | `0x210` | `ULevelActorContainer::Actors` |
+| **PlayerArray** | `0x288` | `AGameStateBase::PlayerArray` |
+| **ServerWorldTime** | `0x2A0` | `AGameStateBase::ServerWorldTimeSecondsDelta` |
+| **Seconds** | `0x190` | `UWorld::TimeSeconds` — `RotationPointer + 0x10` |
+
+#### Actor / component
+
+| Name | Offset | Label |
+|---|---|---|
+| **RootComponent** | `0x1B0` | `AActor::RootComponent` |
+| **RelativeLocation** | `0x140` | `USceneComponent::RelativeLocation` |
+| **ComponentToWorld** | `0x1E0` | `USceneComponent::ComponentToWorld` (`Mobility + 0x3D`) |
+
+`Mesh` lives under **player** (`ACharacter::Mesh @ 0x2F0`).
+
+#### Mesh / bones
+
+| Name | Offset | Label |
+|---|---|---|
+| **BoneArray** | `0x660` | `USkeletalMeshComponent` bone `TArray` (primary) |
+| **BoneArray_cache** | `0x670` | `USkeletalMeshComponent` bone `TArray` (secondary) — always `BoneArray + 0x10` |
+| **CurrentReadComponentTransforms** | `0x48` | `USkeletalMeshComponent` active bone buffer index |
+| **CachedComponentSpaceTransforms** | `0x9D0` | `USkeletalMeshComponent::CachedComponentSpaceTransforms` |
+| **LastRenderTime** | `0x338` | `UPrimitiveComponent::LastRenderTimeOnScreen` |
+
+#### Camera / view
+
+| Name | Offset | Label |
+|---|---|---|
+| **LocationPointer** | `0x170` | `UWorld` camera location pointer (view chain) |
+| **RotationPointer** | `0x180` | `UWorld` camera rotation pointer (view chain) |
+| **FOV** | `0x374` | `APlayerController` FOV scalar (degrees / 90) |
+
+#### Misc actor checks
+
+| Name | Offset | Label |
+|---|---|---|
+| **ReviveFromDBNOTime** | `0x4A78` | `AFortPlayerPawnAthena::ReviveFromDBNOTime` |
+| **LifespanAfterDeath** | `0x10A8` | `AFortAthenaVehicle::LifespanAfterDeath` |
+| **ServerCriticalHealth** | `0x1BFC` | `AFortAthenaVehicle::ServerCriticalHealth` |
 
 ### Player
 
-| Name | Offset | Notes |
+`UGameInstance` / `APlayerController` / `AFortPlayerState`
+
+| Name | Offset | Label |
 |---|---|---|
-| **Mesh** | `0x2F0` | Pawn → skeletal mesh |
-| **LocalPlayers** | `0x38` | `GameInstance` → local players |
-| **PlayerController** | `0x30` | LocalPlayer → controller |
-| **LocalPawn** | `0x318` | Controller → acknowledged pawn |
-| **PawnPrivate** | `0x2E8` | PlayerState → pawn |
-| **PlayerState** | `0x290` | Pawn → player state |
-| **PlayerName** | `0x9E8` | PlayerState name (`FString`, encrypted) |
-| **KillScore** | `0xF78` | PlayerState kills |
-| **Platform** | `0x400` | PlayerState platform string |
-| **TeamIndex** | `0xF61` | Team index |
-| **bIsDying** | `0x728` | Dying flag |
-| **bIsDBNO** | `0x851` | Knocked / DBNO flag |
-| **bIsABot** | `0x27A` | Bot flag |
-| **bIsCrouched** | `0x430` | Crouch flag |
-| **HabaneroComponent** | `0x918` | Ranked component |
+| **Mesh** | `0x2F0` | `ACharacter::Mesh` (`SkeletalMeshComponent*`) |
+| **LocalPlayers** | `0x38` | `UGameInstance::LocalPlayers` |
+| **PlayerController** | `0x30` | `UPlayer::PlayerController` |
+| **LocalPawn** | `0x318` | `APlayerController::AcknowledgedPawn` |
+| **PawnPrivate** | `0x2E8` | `APlayerState::PawnPrivate` |
+| **PlayerState** | `0x290` | `APawn::PlayerState` |
+| **TeamIndex** | `0xF61` | `AFortPlayerStateAthena::TeamIndex` |
+| **PlayerName** | `0x9E8` | `AFortPlayerState` username struct (`FText`, encrypted) |
+| **KillScore** | `0xF78` | `AFortPlayerStateAthena::KillScore` |
+| **Platform** | `0x400` | `AFortPlayerState::Platform` |
+| **HabaneroComponent** | `0x918` | `AFortPlayerState::HabaneroComponent` |
+| **bIsDying** | `0x728` | `AFortPawn::bIsDying` (bit 5) |
+| **bIsDBNO** | `0x851` | `AFortPawn::bIsDBNO` (bit 0) |
+| **bIsABot** | `0x27A` | `APlayerState::bIsABot` (bit 3) |
+| **bIsCrouched** | `0x430` | `ACharacter::bIsCrouched` (bit 0) |
 
 ### Weapon
 
-| Name | Offset | Notes |
+`AFortPawn` / `AFortWeapon` / `UFortWeaponItemDefinition`
+
+| Name | Offset | Label |
 |---|---|---|
-| **CurrentWeapon** | `0x9A0` | Pawn → current weapon |
-| **WeaponData** | `0x608` | Weapon → item definition |
-| **ItemName** | `0x38` | Weapon data display name |
-| **AmmoCount** | `0x1140` | Current ammo |
-| **bIsReloadingWeapon** | `0x359` | Reloading flag |
-| **LastFireTime** | `0x104C` | Last fire timestamp |
-| **LastFireTimeVerified** | `0x1054` | Verified last fire |
-| **LastDamagedTime** | `0xDB8` | Last damaged time |
-| **ProjectileSpeed** | `0x2490` | Projectile muzzle speed |
-| **ProjectileGravity** | `0x2494` | Projectile gravity scale |
-| **ComponentVelocity** | `0x188` | Component velocity |
+| **CurrentWeapon** | `0x9A0` | `AFortPawn::CurrentWeapon` |
+| **WeaponData** | `0x608` | `AFortWeapon::WeaponData` |
+| **ItemName** | `0x38` | `UItemDefinitionBase::ItemName` |
+| **AmmoCount** | `0x1140` | `AFortWeapon::AmmoCount` |
+| **bIsReloadingWeapon** | `0x359` | `AFortWeapon::bIsReloadingWeapon` (bit 0) |
+| **LastFireTime** | `0x104C` | `AFortWeapon::LastFireTime` |
+| **LastFireTimeVerified** | `0x1054` | `AFortWeapon::LastFireTimeVerified` |
+| **LastDamagedTime** | `0xDB8` | `AFortPawn::LastDamagedTime` |
+| **ProjectileSpeed** | `0x2490` | `AFortWeapon` projectile speed (float on weapon) |
+| **ProjectileGravity** | `0x2494` | `AFortWeapon::ProjectileGravityScale` — `ProjectileSpeed + 0x4` |
+| **ComponentVelocity** | `0x188` | `USceneComponent::ComponentVelocity` (read from `RootComponent`) |
 
 ### Aim
 
-| Name | Offset | Notes |
+`AFortPlayerController` / `APlayerController`
+
+| Name | Offset | Label |
 |---|---|---|
-| **TargetedFortPawn** | `0x16C0` | Pawn currently under targeting |
-| **LocationUnderReticle** | `0x2188` | World location under reticle |
-| **PlayerAimOffset** | `0x2310` | Player aim offset |
-| **NetConnection** | `0x4A8` | PlayerController net connection |
-| **RotationInput** | `0x4B0` | Rotation input |
-| **WeaponOffsetCorrection** | `0x2340` | Weapon offset correction |
-| **WeaponRecoilOffset** | `0x2328` | Weapon recoil offset |
+| **TargetedFortPawn** | `0x16C0` | `AFortPlayerController::TargetedFortPawn` |
+| **LocationUnderReticle** | `0x2188` | `AFortPlayerController::LocationUnderReticle` |
+| **NetConnection** | `0x4A8` | `APlayerController::NetConnection` |
+| **RotationInput** | `0x4B0` | Rotation write — `NetConnection + 0x08` |
+| **WeaponOffsetCorrection** | `0x2340` | `AFortPlayerController::WeaponOffsetCorrection` |
+| **WeaponRecoilOffset** | `0x2328` | `AFortPlayerController::WeaponRecoilOffset` |
+| **PlayerAimOffset** | `0x2310` | `AFortPlayerController::PlayerAimOffset` |
 
 ### Loot
 
-| Name | Offset | Notes |
+`ABuildingContainer` (chest / ammo box)
+
+| Name | Offset | Label |
 |---|---|---|
-| **SpawnSourceOverride** | `0xB78` | Loot spawn source |
-| **SearchedFlags** | `0xCE2` | Chest / container searched |
-| **SearchText** | `0xD38` | Search prompt text |
-| **ChosenRandomUpgrade** | `0xBC4` | Random upgrade |
+| **SpawnSourceOverride** | `0xB78` | `ABuildingContainer::SpawnSourceOverride` |
+| **SearchedFlags** | `0xCE2` | `ABuildingContainer` (`bAlreadySearched` bit 4) |
+| **SearchText** | `0xD38` | `ABuildingContainer::SearchText` |
+| **ChosenRandomUpgrade** | `0xBC4` | `ABuildingContainer::ChosenRandomUpgrade` |
 
 ### Pickup
 
-| Name | Offset | Notes |
+`AFortPickup` (floor loot)
+
+| Name | Offset | Label |
 |---|---|---|
-| **SimulatingTooLongLength** | `0x290` | Pickup sim timeout |
-| **PrimaryPickupItemEntry** | `0x368` | Primary item entry |
-| **ItemEntryItemDefinition** | `0x10` | Entry → item definition |
-| **ItemDefinitionName** | `0x38` | Item definition name |
-| **ItemDefinitionDataList** | `0x68` | Item definition data list |
-| **ItemEntryItemDataList** | `0x28` | Entry data list |
-| **WeaponDisplayTier** | `0x296` | Display tier / rarity |
-| **RarityStruct** | `0x187DABE8` | Global rarity struct |
-| **PickupFlags** | `0x28C` | Pickup flags |
-| **PickupExtendedFlags** | `0x28D` | Extended pickup flags |
-| **PickupLocationData** | `0x410` | Pickup location data |
+| **SimulatingTooLongLength** | `0x290` | `AFortPickup` |
+| **PrimaryPickupItemEntry** | `0x368` | `AFortPickup` |
+| **PickupFlags** | `0x28C` | `AFortPickup` (`bPickedUp` bit 1) |
+| **PickupExtendedFlags** | `0x28D` | `AFortPickup` (`bClientUseInterpolationOnly` bit 1) |
+| **PickupLocationData** | `0x410` | `AFortPickup` (`FFortPickupLocationData`) |
+| **ItemEntryItemDefinition** | `0x10` | `FItemEntry` → `UItemDefinitionBase* ItemDefinition` |
+| **ItemEntryItemDataList** | `0x28` | `FItemEntry::ItemData.DataList` (`FItemComponentDataList`) |
+| **ItemDefinitionName** | `0x38` | `UItemDefinitionBase::ItemName` |
+| **ItemDefinitionDataList** | `0x68` | `UItemDefinitionBase::DataList` |
+| **WeaponDisplayTier** | `0x296` | `UFortWeaponItemDefinition::DisplayTier` |
+| **RarityStruct** | `0x187DABE8` | `GRarityStruct` — module offset, not an absolute pointer |
 
 ---
 
