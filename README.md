@@ -4,7 +4,7 @@ Up-to-date Unreal Engine offsets for Fortnite, dumped as both a C++ header (`off
 
 | | |
 |---|---|
-| **Last updated** | August 28, 2026 |
+| **Last updated** | September 3, 2026 |
 | **Last checked** | September 3, 2026 at 10:02 PM ET |
 | **Status** | Current patch |
 | **Formats** | `offsets.h` · `offsets.json` |
@@ -78,8 +78,8 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 
 | Name | Offset | Label |
 |---|---|---|
-| **UWorld** | `0x1B315998` | Global `GWorld` pointer — `base + UWORLD` |
-| **UEngine** (`gEngine`) | `0x1B3172F8` | Global `GEngine` pointer — `base + gEngine` |
+| **UWorld** | `0x1A821DE8` | Global `GWorld` pointer — `base + UWORLD` |
+| **UEngine** (`gEngine`) | `0x1A823758` | Global `GEngine` pointer — `base + gEngine` |
 
 #### World chain
 
@@ -90,7 +90,7 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 | **GameState** | `0x1D0` | `UWorld::GameState` |
 | **PersistentLevel** | `0x38` | `UWorld::PersistentLevel` |
 | **Levels** | `0x1E8` | `UWorld::Levels` |
-| **Actors** | `0x210` | `ULevelActorContainer::Actors` |
+| **Actors** | `0x158` | `ULevelActorContainer::Actors` |
 | **PlayerArray** | `0x288` | `AGameStateBase::PlayerArray` |
 | **ServerWorldTime** | `0x2A0` | `AGameStateBase::ServerWorldTimeSecondsDelta` |
 | **Seconds** | `0x190` | `UWorld::TimeSeconds` — `RotationPointer + 0x10` |
@@ -112,8 +112,8 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 | **BoneArray** | `0x660` | `USkeletalMeshComponent` bone `TArray` (primary) |
 | **BoneArray_cache** | `0x670` | `USkeletalMeshComponent` bone `TArray` (secondary) — always `BoneArray + 0x10` |
 | **CurrentReadComponentTransforms** | `0x48` | `USkeletalMeshComponent` active bone buffer index |
-| **CachedComponentSpaceTransforms** | `0x9D0` | `USkeletalMeshComponent::CachedComponentSpaceTransforms` |
-| **LastRenderTime** | `0x338` | `UPrimitiveComponent::LastRenderTimeOnScreen` |
+| **CachedComponentSpaceTransforms** | `0xA20` | `USkeletalMeshComponent::CachedComponentSpaceTransforms` |
+| **LastRenderTime** | `0x2E0` | `UPrimitiveComponent::LastRenderTimeOnScreen` |
 
 #### Camera / view
 
@@ -127,7 +127,7 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 
 | Name | Offset | Label |
 |---|---|---|
-| **ReviveFromDBNOTime** | `0x4A78` | `AFortPlayerPawnAthena::ReviveFromDBNOTime` |
+| **ReviveFromDBNOTime** | `0x4AC8` | `AFortPlayerPawnAthena::ReviveFromDBNOTime` |
 | **LifespanAfterDeath** | `0x10A8` | `AFortAthenaVehicle::LifespanAfterDeath` |
 | **ServerCriticalHealth** | `0x1BFC` | `AFortAthenaVehicle::ServerCriticalHealth` |
 
@@ -159,16 +159,16 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 
 | Name | Offset | Label |
 |---|---|---|
-| **CurrentWeapon** | `0x9A0` | `AFortPawn::CurrentWeapon` |
-| **WeaponData** | `0x608` | `AFortWeapon::WeaponData` |
+| **CurrentWeapon** | `0x9D0` | `AFortPawn::CurrentWeapon` |
+| **WeaponData** | `0x6B0` | `AFortWeapon::WeaponData` |
 | **ItemName** | `0x38` | `UItemDefinitionBase::ItemName` |
-| **AmmoCount** | `0x1140` | `AFortWeapon::AmmoCount` |
-| **bIsReloadingWeapon** | `0x359` | `AFortWeapon::bIsReloadingWeapon` (bit 0) |
-| **LastFireTime** | `0x104C` | `AFortWeapon::LastFireTime` |
-| **LastFireTimeVerified** | `0x1054` | `AFortWeapon::LastFireTimeVerified` |
-| **LastDamagedTime** | `0xDB8` | `AFortPawn::LastDamagedTime` |
-| **ProjectileSpeed** | `0x2490` | `AFortWeapon` projectile speed (float on weapon) |
-| **ProjectileGravity** | `0x2494` | `AFortWeapon::ProjectileGravityScale` — `ProjectileSpeed + 0x4` |
+| **AmmoCount** | `0x1180` | `AFortWeapon::AmmoCount` |
+| **bIsReloadingWeapon** | `0x371` | `AFortWeapon::bIsReloadingWeapon` (bit 0) |
+| **LastFireTime** | `0x108C` | `AFortWeapon::LastFireTime` |
+| **LastFireTimeVerified** | `0x1094` | `AFortWeapon::LastFireTimeVerified` |
+| **LastDamagedTime** | `0xDE8` | `AFortPawn::LastDamagedTime` |
+| **ProjectileSpeed** | `0x1E38` | `AFortWeapon` projectile speed (float on weapon) |
+| **ProjectileGravity** | `0x1E3C` | `AFortWeapon::ProjectileGravityScale` — `ProjectileSpeed + 0x4` |
 | **ComponentVelocity** | `0x188` | `USceneComponent::ComponentVelocity` (read from `RootComponent`) |
 
 ### Aim
@@ -212,7 +212,7 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 | **ItemDefinitionName** | `0x38` | `UItemDefinitionBase::ItemName` |
 | **ItemDefinitionDataList** | `0x68` | `UItemDefinitionBase::DataList` |
 | **WeaponDisplayTier** | `0x296` | `UFortWeaponItemDefinition::DisplayTier` |
-| **RarityStruct** | `0x187DABE8` | `GRarityStruct` — module offset, not an absolute pointer |
+| **RarityStruct** | `0x17D4B9E8` | `GRarityStruct` — module offset, not an absolute pointer |
 
 ---
 
