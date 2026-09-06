@@ -4,8 +4,8 @@ Up-to-date Unreal Engine offsets for Fortnite, dumped as both a C++ header (`off
 
 | | |
 |---|---|
-| **Last updated** | September 3, 2026 |
-| **Last checked** | September 6, 2026 at 12:05 AM ET |
+| **Last updated** | September 6, 2026 |
+| **Last checked** | September 6, 2026 at 12:14 AM ET |
 | **Status** | Current patch |
 | **Formats** | `offsets.h` · `offsets.json` |
 | **Contact** | [t.me/ReadAccess](https://t.me/ReadAccess) |
@@ -55,13 +55,21 @@ Up-to-date Unreal Engine offsets for Fortnite, dumped as both a C++ header (`off
 
 ## How to use
 
-Drop `offsets.h` into your project and include it:
+Drop `offsets.h` into your project and include it. There is no standalone `UWORLD` offset — you get `UWorld` from `gEngine`:
 
 ```cpp
 #include "offsets.h"
 
-auto uworld = Read<uintptr_t>(base + offsets::core::UWORLD);
-auto mesh   = Read<uintptr_t>(pawn + offsets::player::Mesh);
+auto gengine  = Read<uintptr_t>(base + offsets::core::gEngine);
+auto viewport = Read<uintptr_t>(gengine + offsets::core::GameViewport);
+auto uworld   = Read<uintptr_t>(viewport + 0x78); // UWorld
+
+auto game_instance = Read<uintptr_t>(uworld + offsets::core::GameInstance);
+auto local_players = Read<uintptr_t>(game_instance + offsets::player::LocalPlayers);
+auto local_player  = Read<uintptr_t>(local_players);
+auto controller    = Read<uintptr_t>(local_player + offsets::player::PlayerController);
+auto pawn          = Read<uintptr_t>(controller + offsets::player::LocalPawn);
+auto mesh          = Read<uintptr_t>(pawn + offsets::player::Mesh);
 ```
 
 If you load offsets at runtime instead of compiling them in, parse `offsets.json`. The keys match the C++ names.
@@ -70,7 +78,7 @@ If you load offsets at runtime instead of compiling them in, parse `offsets.json
 
 ## Main offsets
 
-Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative to the game module base. Everything else is a class member offset. Labels use Unreal names (`Class::Member`).
+Values are copied from `offsets.h`. Globals (`gEngine`) are relative to the game module base. Everything else is a class member offset. Labels use Unreal names (`Class::Member`).
 
 ### Core / world
 
@@ -78,22 +86,21 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 
 | Name | Offset | Label |
 |---|---|---|
-| **UWorld** | `0x1A821DE8` | Global `GWorld` pointer — `base + UWORLD` |
-| **UEngine** (`gEngine`) | `0x1A823758` | Global `GEngine` pointer — `base + gEngine` |
+| **UEngine** (`gEngine`) | `0x1A9E7BD8` | Global `GEngine` pointer — `base + gEngine` |
 
 #### World chain
 
 | Name | Offset | Label |
 |---|---|---|
 | **GameViewport** | `0xB70` | `UEngine::GameViewport` |
-| **GameInstance** | `0x248` | `UWorld::OwningGameInstance` |
-| **GameState** | `0x1D0` | `UWorld::GameState` |
+| **GameInstance** | `0x240` | `UWorld::OwningGameInstance` |
+| **GameState** | `0x1C8` | `UWorld::GameState` |
 | **PersistentLevel** | `0x38` | `UWorld::PersistentLevel` |
-| **Levels** | `0x1E8` | `UWorld::Levels` |
-| **Actors** | `0x158` | `ULevelActorContainer::Actors` |
+| **Levels** | `0x1E0` | `UWorld::Levels` |
+| **Actors** | `0x218` | `ULevelActorContainer::Actors` |
 | **PlayerArray** | `0x288` | `AGameStateBase::PlayerArray` |
 | **ServerWorldTime** | `0x2A0` | `AGameStateBase::ServerWorldTimeSecondsDelta` |
-| **Seconds** | `0x190` | `UWorld::TimeSeconds` — `RotationPointer + 0x10` |
+| **Seconds** | `0x188` | `UWorld::TimeSeconds` — `RotationPointer + 0x10` |
 
 #### Actor / component
 
@@ -112,15 +119,15 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 | **BoneArray** | `0x660` | `USkeletalMeshComponent` bone `TArray` (primary) |
 | **BoneArray_cache** | `0x670` | `USkeletalMeshComponent` bone `TArray` (secondary) — always `BoneArray + 0x10` |
 | **CurrentReadComponentTransforms** | `0x48` | `USkeletalMeshComponent` active bone buffer index |
-| **CachedComponentSpaceTransforms** | `0xA20` | `USkeletalMeshComponent::CachedComponentSpaceTransforms` |
-| **LastRenderTime** | `0x2E0` | `UPrimitiveComponent::LastRenderTimeOnScreen` |
+| **CachedComponentSpaceTransforms** | `0x9E8` | `USkeletalMeshComponent::CachedComponentSpaceTransforms` |
+| **LastRenderTime** | `0x290` | `UPrimitiveComponent::LastRenderTimeOnScreen` |
 
 #### Camera / view
 
 | Name | Offset | Label |
 |---|---|---|
-| **LocationPointer** | `0x170` | `UWorld` camera location pointer (view chain) |
-| **RotationPointer** | `0x180` | `UWorld` camera rotation pointer (view chain) |
+| **LocationPointer** | `0x168` | `UWorld` camera location pointer (view chain) |
+| **RotationPointer** | `0x178` | `UWorld` camera rotation pointer (view chain) |
 | **FOV** | `0x374` | `APlayerController` FOV scalar (degrees / 90) |
 
 #### Misc actor checks
@@ -149,7 +156,7 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 | **Platform** | `0x400` | `AFortPlayerState::Platform` |
 | **HabaneroComponent** | `0x918` | `AFortPlayerState::HabaneroComponent` |
 | **bIsDying** | `0x728` | `AFortPawn::bIsDying` (bit 5) |
-| **bIsDBNO** | `0x851` | `AFortPawn::bIsDBNO` (bit 0) |
+| **bIsDBNO** | `0x881` | `AFortPawn::bIsDBNO` (bit 0) |
 | **bIsABot** | `0x27A` | `APlayerState::bIsABot` (bit 3) |
 | **bIsCrouched** | `0x430` | `ACharacter::bIsCrouched` (bit 0) |
 
@@ -160,15 +167,15 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 | Name | Offset | Label |
 |---|---|---|
 | **CurrentWeapon** | `0x9D0` | `AFortPawn::CurrentWeapon` |
-| **WeaponData** | `0x6B0` | `AFortWeapon::WeaponData` |
+| **WeaponData** | `0x638` | `AFortWeapon::WeaponData` |
 | **ItemName** | `0x38` | `UItemDefinitionBase::ItemName` |
-| **AmmoCount** | `0x1180` | `AFortWeapon::AmmoCount` |
-| **bIsReloadingWeapon** | `0x371` | `AFortWeapon::bIsReloadingWeapon` (bit 0) |
-| **LastFireTime** | `0x108C` | `AFortWeapon::LastFireTime` |
-| **LastFireTimeVerified** | `0x1094` | `AFortWeapon::LastFireTimeVerified` |
+| **AmmoCount** | `0x1100` | `AFortWeapon::AmmoCount` |
+| **bIsReloadingWeapon** | `0x381` | `AFortWeapon::bIsReloadingWeapon` (bit 0) |
+| **LastFireTime** | `0xFFC` | `AFortWeapon::LastFireTime` |
+| **LastFireTimeVerified** | `0x1004` | `AFortWeapon::LastFireTimeVerified` |
 | **LastDamagedTime** | `0xDE8` | `AFortPawn::LastDamagedTime` |
-| **ProjectileSpeed** | `0x1E38` | `AFortWeapon` projectile speed (float on weapon) |
-| **ProjectileGravity** | `0x1E3C` | `AFortWeapon::ProjectileGravityScale` — `ProjectileSpeed + 0x4` |
+| **ProjectileSpeed** | `0x210C` | `AFortWeapon` projectile speed (float on weapon) |
+| **ProjectileGravity** | `0x2110` | `AFortWeapon::ProjectileGravityScale` — `ProjectileSpeed + 0x4` |
 | **ComponentVelocity** | `0x188` | `USceneComponent::ComponentVelocity` (read from `RootComponent`) |
 
 ### Aim
@@ -212,7 +219,7 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 | **ItemDefinitionName** | `0x38` | `UItemDefinitionBase::ItemName` |
 | **ItemDefinitionDataList** | `0x68` | `UItemDefinitionBase::DataList` |
 | **WeaponDisplayTier** | `0x296` | `UFortWeaponItemDefinition::DisplayTier` |
-| **RarityStruct** | `0x17D4B9E8` | `GRarityStruct` — module offset, not an absolute pointer |
+| **RarityStruct** | `0x17EF48D8` | `GRarityStruct` — module offset, not an absolute pointer |
 
 ---
 
@@ -222,20 +229,21 @@ Typical resolve from module base to local pawn and mesh:
 
 ```text
 base
- ├─ + UWORLD            → UWorld
- │    ├─ + GameInstance → GameInstance
- │    │    └─ + LocalPlayers[0]
- │    │         └─ + PlayerController
- │    │              ├─ + LocalPawn     → pawn
- │    │              ├─ + FOV
- │    │              └─ + TargetedFortPawn / LocationUnderReticle
- │    ├─ + GameState
- │    │    └─ + PlayerArray
- │    ├─ + PersistentLevel / Levels
- │    │    └─ + Actors
- │    ├─ + LocationPointer / RotationPointer / Seconds
- │    └─ + GameViewport (via GEngine, see Uworld.h)
- │
+ └─ + gEngine           → UEngine
+      └─ + GameViewport → UGameViewportClient
+           └─ + 0x78    → UWorld
+                ├─ + GameInstance → GameInstance
+                │    └─ + LocalPlayers[0]
+                │         └─ + PlayerController
+                │              ├─ + LocalPawn     → pawn
+                │              ├─ + FOV
+                │              └─ + TargetedFortPawn / LocationUnderReticle
+                ├─ + GameState
+                │    └─ + PlayerArray
+                ├─ + PersistentLevel / Levels
+                │    └─ + Actors
+                └─ + LocationPointer / RotationPointer / Seconds
+
  pawn
  ├─ + Mesh              → skeletal mesh (BoneArray / BoneArray_cache)
  ├─ + RootComponent     → ComponentToWorld, RelativeLocation
@@ -243,7 +251,7 @@ base
  └─ + CurrentWeapon     → WeaponData, AmmoCount, ProjectileSpeed, ProjectileGravity
 ```
 
-Alternate UWorld resolve (from `Uworld.h`):
+UWorld resolve (from `Uworld.h`):
 
 ```cpp
 auto gengine  = Read<uintptr_t>(base + offsets::core::gEngine);
@@ -270,7 +278,7 @@ These headers are examples of how the offsets are typically read. Copy what you 
 
 ## Notes
 
-- **Patch cadence** — Fortnite ships updates often. Globals like `UWORLD` and `gEngine` almost always move. Member offsets move less often but still can.
+- **Patch cadence** — Fortnite ships updates often. Globals like `gEngine` almost always move. Member offsets move less often but still can.
 - **Two copies** — Keep `offsets.h` and `offsets.json` in sync. If you only update one, the other will be stale.
 - **Names** — `PlayerName` is encrypted. Use the decrypt in `PlayerName.h`, do not treat it as a raw string.
 - **Visibility** — `VisCheck.h` treats a mesh as hidden if `Seconds - LastRenderTime > 0.06`.
