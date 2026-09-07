@@ -1,5 +1,6 @@
 # Fortnite Offsets
 
+Discord: https://discord.gg/XQakr64AD
 Up-to-date Unreal Engine offsets for Fortnite, dumped as both a C++ header (`offsets.h`) and JSON (`offsets.json`).
 
 | | |
