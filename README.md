@@ -1,13 +1,11 @@
 # Fortnite Offsets
 
-Discord: [https://discord.gg/yMNG3jx9k](https://discord.gg/yMNG3jx9k)
-
 Up-to-date Unreal Engine offsets for Fortnite, dumped as both a C++ header (`offsets.h`) and JSON (`offsets.json`).
 
 | | |
 |---|---|
-| **Last updated** | September 6, 2026 |
-| **Last checked** | September 7, 2026 at 12:22 AM ET |
+| **Last updated** | September 7, 2026 |
+| **Last checked** | September 7, 2026 at 12:21 AM ET |
 | **Status** | Current patch |
 | **Formats** | `offsets.h` · `offsets.json` |
 | **Contact** | [t.me/ReadAccess](https://t.me/ReadAccess) |
@@ -45,7 +43,7 @@ Up-to-date Unreal Engine offsets for Fortnite, dumped as both a C++ header (`off
 |---|---|
 | [`offsets.h`](offsets.h) | C++ `constexpr` offsets, namespaced (`core`, `player`, `weapon`, `aim`, `loot`, `pickup`) |
 | [`offsets.json`](offsets.json) | Same offsets as JSON for loaders, dumpers, or other languages |
-| [`Uworld.h`](Uworld.h) | GEngine → GameViewport → UWorld resolve |
+| [`Uworld.h`](Uworld.h) | Encrypted `GWorld` decrypt, or GEngine → GameViewport → UWorld |
 | [`Camera.h`](Camera.h) | Location / rotation pointers, FOV, world-to-screen |
 | [`PlayerName.h`](PlayerName.h) | Player name decrypt from `PlayerState` |
 | [`DecryptWeapon.h`](DecryptWeapon.h) | Current weapon name from pawn |
@@ -57,14 +55,18 @@ Up-to-date Unreal Engine offsets for Fortnite, dumped as both a C++ header (`off
 
 ## How to use
 
-Drop `offsets.h` into your project and include it. There is no standalone `UWORLD` offset — you get `UWorld` from `gEngine`:
+Drop `offsets.h` into your project and include it. `GWorld` at `0x1A9E6268` is encrypted — decrypt it to get `UWorld`:
 
 ```cpp
 #include "offsets.h"
+#include <intrin.h>
 
-auto gengine  = Read<uintptr_t>(base + offsets::core::gEngine);
-auto viewport = Read<uintptr_t>(gengine + offsets::core::GameViewport);
-auto uworld   = Read<uintptr_t>(viewport + 0x78); // UWorld
+constexpr std::uintptr_t uworld_encrypted_rva = 0x1A9E6268;
+
+auto encrypted = Read<uint64_t>(base + uworld_encrypted_rva);
+auto uworld = static_cast<uintptr_t>(
+    _byteswap_uint64(encrypted ^ 0x0000000001047ADE) - 0x0803A0EA
+);
 
 auto game_instance = Read<uintptr_t>(uworld + offsets::core::GameInstance);
 auto local_players = Read<uintptr_t>(game_instance + offsets::player::LocalPlayers);
@@ -74,13 +76,21 @@ auto pawn          = Read<uintptr_t>(controller + offsets::player::LocalPawn);
 auto mesh          = Read<uintptr_t>(pawn + offsets::player::Mesh);
 ```
 
+`gEngine` still works if you want the viewport chain instead:
+
+```cpp
+auto gengine  = Read<uintptr_t>(base + offsets::core::gEngine);
+auto viewport = Read<uintptr_t>(gengine + offsets::core::GameViewport);
+auto uworld   = Read<uintptr_t>(viewport + 0x78); // UWorld
+```
+
 If you load offsets at runtime instead of compiling them in, parse `offsets.json`. The keys match the C++ names.
 
 ---
 
 ## Main offsets
 
-Values are copied from `offsets.h`. Globals (`gEngine`) are relative to the game module base. Everything else is a class member offset. Labels use Unreal names (`Class::Member`).
+Values are copied from `offsets.h`. Globals (`GWorld`, `gEngine`) are relative to the game module base. `GWorld` is encrypted — XOR, byteswap, then subtract. Everything else is a class member offset. Labels use Unreal names (`Class::Member`).
 
 ### Core / world
 
@@ -88,6 +98,7 @@ Values are copied from `offsets.h`. Globals (`gEngine`) are relative to the game
 
 | Name | Offset | Label |
 |---|---|---|
+| **UWorld** (`GWorld`) | `0x1A9E6268` | Encrypted `GWorld` RVA — `base + GWorld`, then decrypt |
 | **UEngine** (`gEngine`) | `0x1A9E7BD8` | Global `GEngine` pointer — `base + gEngine` |
 
 #### World chain
@@ -231,20 +242,20 @@ Typical resolve from module base to local pawn and mesh:
 
 ```text
 base
- └─ + gEngine           → UEngine
-      └─ + GameViewport → UGameViewportClient
-           └─ + 0x78    → UWorld
-                ├─ + GameInstance → GameInstance
-                │    └─ + LocalPlayers[0]
-                │         └─ + PlayerController
-                │              ├─ + LocalPawn     → pawn
-                │              ├─ + FOV
-                │              └─ + TargetedFortPawn / LocationUnderReticle
-                ├─ + GameState
-                │    └─ + PlayerArray
-                ├─ + PersistentLevel / Levels
-                │    └─ + Actors
-                └─ + LocationPointer / RotationPointer / Seconds
+ ├─ + GWorld (encrypted) → decrypt → UWorld
+ │    ├─ + GameInstance → GameInstance
+ │    │    └─ + LocalPlayers[0]
+ │    │         └─ + PlayerController
+ │    │              ├─ + LocalPawn     → pawn
+ │    │              ├─ + FOV
+ │    │              └─ + TargetedFortPawn / LocationUnderReticle
+ │    ├─ + GameState
+ │    │    └─ + PlayerArray
+ │    ├─ + PersistentLevel / Levels
+ │    │    └─ + Actors
+ │    └─ + LocationPointer / RotationPointer / Seconds
+ │
+ └─ + gEngine → GameViewport → +0x78 → UWorld  (alternate)
 
  pawn
  ├─ + Mesh              → skeletal mesh (BoneArray / BoneArray_cache)
@@ -253,7 +264,18 @@ base
  └─ + CurrentWeapon     → WeaponData, AmmoCount, ProjectileSpeed, ProjectileGravity
 ```
 
-UWorld resolve (from `Uworld.h`):
+`GWorld` decrypt:
+
+```cpp
+constexpr std::uintptr_t uworld_encrypted_rva = 0x1A9E6268;
+
+auto encrypted = Read<uint64_t>(base + uworld_encrypted_rva);
+auto uworld = static_cast<uintptr_t>(
+    _byteswap_uint64(encrypted ^ 0x0000000001047ADE) - 0x0803A0EA
+);
+```
+
+Alternate UWorld resolve from `gEngine` (from `Uworld.h`):
 
 ```cpp
 auto gengine  = Read<uintptr_t>(base + offsets::core::gEngine);
@@ -280,11 +302,12 @@ These headers are examples of how the offsets are typically read. Copy what you 
 
 ## Notes
 
-- **Patch cadence** — Fortnite ships updates often. Globals like `gEngine` almost always move. Member offsets move less often but still can.
+- **Patch cadence** — Fortnite ships updates often. Globals like `GWorld` and `gEngine` almost always move. The `GWorld` xor/subtract constants can change too. Member offsets move less often but still can.
 - **Two copies** — Keep `offsets.h` and `offsets.json` in sync. If you only update one, the other will be stale.
 - **Names** — `PlayerName` is encrypted. Use the decrypt in `PlayerName.h`, do not treat it as a raw string.
 - **Visibility** — `VisCheck.h` treats a mesh as hidden if `Seconds - LastRenderTime > 0.06`.
 - **Ranked** — `HabaneroComponent` is on `PlayerState`. Ranked tier is read from that component (see `RankedProgress.h`).
+- **GWorld** — The value at `0x1A9E6268` is encrypted. XOR with `0x1047ADE`, `_byteswap_uint64`, then subtract `0x0803A0EA`. Do not use it as a raw pointer.
 - **Validation** — Always null-check pointers (`UWorld`, pawn, mesh, weapon). A bad chain is the usual cause of crashes after an update.
 
 Offsets outdated? Ping **[@ReadAccess](https://t.me/ReadAccess)** on Telegram.
