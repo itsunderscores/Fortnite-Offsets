@@ -1,5 +1,6 @@
 {
   "core": {
+    "UWORLD":               "0x1A9E6268",
     "gEngine":              "0x1A9E7BD8",
     "GameViewport":         "0xB70",
     "GameInstance":         "0x240",
