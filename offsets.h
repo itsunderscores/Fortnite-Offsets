@@ -1,5 +1,6 @@
 namespace offsets {
     namespace core {
+        constexpr std::uintptr_t UWORLD = 0x1A9E6268;
         constexpr std::uintptr_t gEngine = 0x1A9E7BD8;
         constexpr std::uintptr_t GameViewport = 0xB70;
         constexpr std::uintptr_t GameInstance = 0x240;
