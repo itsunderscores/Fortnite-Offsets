@@ -61,13 +61,12 @@ Drop `offsets.h` into your project and include it. There are **2 options** for `
 
 ```cpp
 #include "offsets.h"
-#include <intrin.h>
 
 constexpr std::uintptr_t uworld_encrypted_rva = 0x1B2C5BA0;
 
-auto encrypted = Read<uint64_t>(base + uworld_encrypted_rva);
+auto encoded = Read<uint64_t>(base + uworld_encrypted_rva);
 auto uworld = static_cast<uintptr_t>(
-    _byteswap_uint64(encrypted ^ 0x0000000001047ADE) - 0x0803A0EA
+    0x6501B96661E130DDULL * encoded + 0x79D95BD19230E74DULL
 );
 
 auto game_instance = Read<uintptr_t>(uworld + offsets::core::GameInstance);
@@ -92,7 +91,7 @@ If you load offsets at runtime instead of compiling them in, parse `offsets.json
 
 ## Main offsets
 
-Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative to the game module base. `UWORLD` is encrypted — XOR, byteswap, then subtract. Everything else is a class member offset. Labels use Unreal names (`Class::Member`).
+Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative to the game module base. `UWORLD` is encrypted — multiply, then add. Everything else is a class member offset. Labels use Unreal names (`Class::Member`).
 
 ### Core / world
 
@@ -271,9 +270,9 @@ base
 ```cpp
 constexpr std::uintptr_t uworld_encrypted_rva = 0x1B2C5BA0;
 
-auto encrypted = Read<uint64_t>(base + uworld_encrypted_rva);
+auto encoded = Read<uint64_t>(base + uworld_encrypted_rva);
 auto uworld = static_cast<uintptr_t>(
-    _byteswap_uint64(encrypted ^ 0x0000000001047ADE) - 0x0803A0EA
+    0x6501B96661E130DDULL * encoded + 0x79D95BD19230E74DULL
 );
 ```
 
@@ -304,12 +303,12 @@ These headers are examples of how the offsets are typically read. Copy what you 
 
 ## Notes
 
-- **Patch cadence** — Fortnite ships updates often. Globals like `UWORLD` and `gEngine` almost always move. The `UWORLD` xor/subtract constants can change too. Member offsets move less often but still can.
+- **Patch cadence** — Fortnite ships updates often. Globals like `UWORLD` and `gEngine` almost always move. The `UWORLD` multiply/add constants can change too. Member offsets move less often but still can.
 - **Two copies** — Keep `offsets.h` and `offsets.json` in sync. If you only update one, the other will be stale.
 - **Names** — `PlayerName` is encrypted. Use the decrypt in `PlayerName.h`, do not treat it as a raw string.
 - **Visibility** — `VisCheck.h` treats a mesh as hidden if `Seconds - LastRenderTime > 0.06`.
 - **Ranked** — `HabaneroComponent` is on `PlayerState`. Ranked tier is read from that component (see `RankedProgress.h`).
-- **UWORLD** — The value at `0x1B2C5BA0` is encrypted. XOR with `0x1047ADE`, `_byteswap_uint64`, then subtract `0x0803A0EA`. Do not use it as a raw pointer.
+- **UWORLD** — The value at `0x1B2C5BA0` is encrypted. Multiply by `0x6501B96661E130DD`, then add `0x79D95BD19230E74D`. Do not use it as a raw pointer.
 - **Validation** — Always null-check pointers (`UWorld`, pawn, mesh, weapon). A bad chain is the usual cause of crashes after an update.
 
 Offsets outdated? Ping **[@ReadAccess](https://t.me/ReadAccess)** on Telegram.
