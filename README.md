@@ -5,9 +5,10 @@ Up-to-date Unreal Engine offsets for Fortnite, dumped as both a C++ header (`off
 | | |
 |---|---|
 | **Last updated** | October 1, 2026 |
-| **Last checked** | October 4, 2026 at 10:55 PM ET |
+| **Last checked** | October 1, 2026 at 9:24 PM PT |
 | **Status** | Current patch |
 | **Formats** | `offsets.h` · `offsets.json` |
+| **SDK Viewer** | [underscores.dev](https://underscores.dev/) |
 | **Contact** | [t.me/ReadAccess](https://t.me/ReadAccess) |
 
 > Offsets change every Fortnite update. If something reads as null or garbage after a patch, grab the latest dump from this repo before anything else.
@@ -17,6 +18,7 @@ Up-to-date Unreal Engine offsets for Fortnite, dumped as both a C++ header (`off
 ## Contents
 
 - [What's in this repo](#whats-in-this-repo)
+- [SDK Viewer](#sdk-viewer)
 - [How to use](#how-to-use)
 - [Main offsets](#main-offsets)
   - [Core / world](#core--world)
@@ -50,6 +52,14 @@ Up-to-date Unreal Engine offsets for Fortnite, dumped as both a C++ header (`off
 | [`VisCheck.h`](VisCheck.h) | Visibility check via `Seconds` vs `LastRenderTime` |
 | [`RankedProgress.h`](RankedProgress.h) | Ranked tier from `HabaneroComponent` |
 | [`Matrix.h`](Matrix.h) | `FTransform` / matrix helpers for bones |
+
+---
+
+## SDK Viewer
+
+Browse classes, members, and offsets in the browser: **[underscores.dev](https://underscores.dev/)**.
+
+Use it when you need the full SDK, not just the dump in this README.
 
 ---
 
