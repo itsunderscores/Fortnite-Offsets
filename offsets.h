@@ -1,29 +1,29 @@
 namespace offsets {
     namespace core {
-        constexpr std::uintptr_t UWORLD = 0x1B1D12F8;
-        constexpr std::uintptr_t gEngine = 0x1B1D2C68;
+        constexpr std::uintptr_t UWORLD = 0x1BD9B9E8;
+        constexpr std::uintptr_t gEngine = 0x1BD9D378;
         constexpr std::uintptr_t GameViewport = 0xB70;
-        constexpr std::uintptr_t GameInstance = 0x248;
-        constexpr std::uintptr_t GameState = 0x1D0;
+        constexpr std::uintptr_t GameInstance = 0x250;
+        constexpr std::uintptr_t GameState = 0x1D8;
         constexpr std::uintptr_t RootComponent = 0x1B0;
         constexpr std::uintptr_t ComponentToWorld = 0x1E0;
         constexpr std::uintptr_t BoneArray = 0x660;
         constexpr std::uintptr_t BoneArray_cache = 0x670;
         constexpr std::uintptr_t PlayerArray = 0x288;
         constexpr std::uintptr_t RelativeLocation = 0x140;
-        constexpr std::uintptr_t LocationPointer = 0x170;
-        constexpr std::uintptr_t RotationPointer = 0x180;
-        constexpr std::uintptr_t Seconds = 0x190;
+        constexpr std::uintptr_t LocationPointer = 0x178;
+        constexpr std::uintptr_t RotationPointer = 0x188;
+        constexpr std::uintptr_t Seconds = 0x198;
         constexpr std::uintptr_t FOV = 0x374;
         constexpr std::uintptr_t ServerWorldTime = 0x2A0;
-        constexpr std::uintptr_t LastRenderTime = 0x290;
+        constexpr std::uintptr_t LastRenderTime = 0x2e0;
         constexpr std::uintptr_t PersistentLevel = 0x38;
-        constexpr std::uintptr_t Levels = 0x1E8;
-        constexpr std::uintptr_t Actors = 0x200;
-        constexpr std::uintptr_t ReviveFromDBNOTime = 0x4B38;
+        constexpr std::uintptr_t Levels = 0x1F0;
+        constexpr std::uintptr_t Actors = 0x50;
+        constexpr std::uintptr_t ReviveFromDBNOTime = 0x4bb8;
         constexpr std::uintptr_t LifespanAfterDeath = 0x10A8;
         constexpr std::uintptr_t ServerCriticalHealth = 0x1BFC;
-        constexpr std::uintptr_t CachedComponentSpaceTransforms = 0x9D0;
+        constexpr std::uintptr_t CachedComponentSpaceTransforms = 0xa10;
         constexpr std::uintptr_t CurrentReadComponentTransforms = 0x48;
     }
 
@@ -47,15 +47,15 @@ namespace offsets {
 
     namespace weapon {
         constexpr std::uintptr_t CurrentWeapon = 0x9d0;
-        constexpr std::uintptr_t WeaponData = 0x6D0;
+        constexpr std::uintptr_t WeaponData = 0x610;
         constexpr std::uintptr_t ItemName = 0x38;
-        constexpr std::uintptr_t AmmoCount = 0x11C0;
+        constexpr std::uintptr_t AmmoCount = 0x10d8;
         constexpr std::uintptr_t bIsReloadingWeapon = 0x379;
-        constexpr std::uintptr_t LastFireTime = 0x10C4;
-        constexpr std::uintptr_t LastFireTimeVerified = 0x10CC;
-        constexpr std::uintptr_t LastDamagedTime = 0xDE8;
-        constexpr std::uintptr_t ProjectileSpeed = 0x23f0;
-        constexpr std::uintptr_t ProjectileGravity = 0x23f4;
+        constexpr std::uintptr_t LastFireTime = 0xfdc;
+        constexpr std::uintptr_t LastFireTimeVerified = 0xfe4;
+        constexpr std::uintptr_t LastDamagedTime = 0xe18;
+        constexpr std::uintptr_t ProjectileSpeed = 0x2148;
+        constexpr std::uintptr_t ProjectileGravity = 0x214c;
         constexpr std::uintptr_t ComponentVelocity = 0x188;
     }
 
@@ -84,7 +84,7 @@ namespace offsets {
         constexpr std::uintptr_t ItemDefinitionDataList = 0x68;
         constexpr std::uintptr_t ItemEntryItemDataList = 0x28;
         constexpr std::uintptr_t WeaponDisplayTier = 0x296;
-        constexpr std::uintptr_t RarityStruct = 0x186B9BF8;
+        constexpr std::uintptr_t RarityStruct = 0x1908F580;
         constexpr std::uintptr_t PickupFlags = 0x28C;
         constexpr std::uintptr_t PickupExtendedFlags = 0x28D;
         constexpr std::uintptr_t PickupLocationData = 0x410;
