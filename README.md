@@ -5,7 +5,7 @@ Up-to-date Unreal Engine offsets for Fortnite, dumped as both a C++ header (`off
 | | |
 |---|---|
 | **Last updated** | October 15, 2026 |
-| **Last checked** | October 19, 2026 at 2:54 PM ET |
+| **Last checked** | October 19, 2026 at 3:09 PM ET |
 | **Status** | 42.40-CL-59086525-Windows |
 | **Formats** | `offsets.h` · `offsets.json` |
 | **SDK Viewer** | [underscores.dev](https://underscores.dev/) |
