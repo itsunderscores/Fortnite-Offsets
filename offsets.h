@@ -1,10 +1,10 @@
 namespace offsets {
     namespace core {
-        constexpr std::uintptr_t UWORLD = 0x1BD9B9E8;
-        constexpr std::uintptr_t gEngine = 0x1BD9D378;
+        constexpr std::uintptr_t UWORLD = 0x1B096DE8;
+        constexpr std::uintptr_t gEngine = 0x1B098778;
         constexpr std::uintptr_t GameViewport = 0xB70;
-        constexpr std::uintptr_t GameInstance = 0x250;
-        constexpr std::uintptr_t GameState = 0x1D8;
+        constexpr std::uintptr_t GameInstance = 0x248;
+        constexpr std::uintptr_t GameState = 0x1D0;
         constexpr std::uintptr_t RootComponent = 0x1B0;
         constexpr std::uintptr_t ComponentToWorld = 0x1E0;
         constexpr std::uintptr_t BoneArray = 0x660;
@@ -16,17 +16,17 @@ namespace offsets {
         constexpr std::uintptr_t Seconds = 0x198;
         constexpr std::uintptr_t FOV = 0x374;
         constexpr std::uintptr_t ServerWorldTime = 0x2A0;
-        constexpr std::uintptr_t LastRenderTime = 0x2e0;
+        constexpr std::uintptr_t LastRenderTime = 0x548;
         constexpr std::uintptr_t PersistentLevel = 0x38;
-        constexpr std::uintptr_t Levels = 0x1F0;
-        constexpr std::uintptr_t Actors = 0x50;
+        constexpr std::uintptr_t Levels = 0x1E8;
+        constexpr std::uintptr_t Actors = 0x218;
         constexpr std::uintptr_t ReviveFromDBNOTime = 0x4bb8;
         constexpr std::uintptr_t LifespanAfterDeath = 0x10A8;
         constexpr std::uintptr_t ServerCriticalHealth = 0x1BFC;
-        constexpr std::uintptr_t CachedComponentSpaceTransforms = 0xa10;
+        constexpr std::uintptr_t CachedComponentSpaceTransforms = 0xa00;
         constexpr std::uintptr_t CurrentReadComponentTransforms = 0x48;
     }
-
+ 
     namespace player {
         constexpr std::uintptr_t Mesh = 0x2F0;
         constexpr std::uintptr_t LocalPlayers = 0x38;
@@ -44,21 +44,21 @@ namespace offsets {
         constexpr std::uintptr_t bIsCrouched = 0x430;
         constexpr std::uintptr_t HabaneroComponent = 0x918;
     }
-
+ 
     namespace weapon {
         constexpr std::uintptr_t CurrentWeapon = 0x9d0;
-        constexpr std::uintptr_t WeaponData = 0x610;
+        constexpr std::uintptr_t WeaponData = 0x648;
         constexpr std::uintptr_t ItemName = 0x38;
-        constexpr std::uintptr_t AmmoCount = 0x10d8;
+        constexpr std::uintptr_t AmmoCount = 0x11b0;
         constexpr std::uintptr_t bIsReloadingWeapon = 0x379;
-        constexpr std::uintptr_t LastFireTime = 0xfdc;
-        constexpr std::uintptr_t LastFireTimeVerified = 0xfe4;
+        constexpr std::uintptr_t LastFireTime = 0x10b4;
+        constexpr std::uintptr_t LastFireTimeVerified = 0x10bc;
         constexpr std::uintptr_t LastDamagedTime = 0xe18;
-        constexpr std::uintptr_t ProjectileSpeed = 0x2148;
-        constexpr std::uintptr_t ProjectileGravity = 0x214c;
+        constexpr std::uintptr_t ProjectileSpeed = 0x20d4;
+        constexpr std::uintptr_t ProjectileGravity = 0x20d8;
         constexpr std::uintptr_t ComponentVelocity = 0x188;
     }
-
+ 
     namespace aim {
         constexpr std::uintptr_t TargetedFortPawn = 0x16D0;
         constexpr std::uintptr_t LocationUnderReticle = 0x21B0;
@@ -68,14 +68,14 @@ namespace offsets {
         constexpr std::uintptr_t WeaponRecoilOffset = 0x2358;
         constexpr std::uintptr_t PlayerAimOffset = 0x2340;
     }
-
+ 
     namespace loot {
         constexpr std::uintptr_t SpawnSourceOverride = 0xB78;
         constexpr std::uintptr_t SearchedFlags = 0xCE2;
         constexpr std::uintptr_t SearchText = 0xD38;
         constexpr std::uintptr_t ChosenRandomUpgrade = 0xBC4;
     }
-
+ 
     namespace pickup {
         constexpr std::uintptr_t SimulatingTooLongLength = 0x290;
         constexpr std::uintptr_t PrimaryPickupItemEntry = 0x368;
@@ -84,7 +84,7 @@ namespace offsets {
         constexpr std::uintptr_t ItemDefinitionDataList = 0x68;
         constexpr std::uintptr_t ItemEntryItemDataList = 0x28;
         constexpr std::uintptr_t WeaponDisplayTier = 0x296;
-        constexpr std::uintptr_t RarityStruct = 0x1908F580;
+        constexpr std::uintptr_t RarityStruct = 0x183C4330;
         constexpr std::uintptr_t PickupFlags = 0x28C;
         constexpr std::uintptr_t PickupExtendedFlags = 0x28D;
         constexpr std::uintptr_t PickupLocationData = 0x410;
