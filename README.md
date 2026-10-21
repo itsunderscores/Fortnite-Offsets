@@ -4,9 +4,9 @@ Up-to-date Unreal Engine offsets for Fortnite, dumped as both a C++ header (`off
 
 | | |
 |---|---|
-| **Last updated** | October 15, 2026 |
-| **Last checked** | October 21, 2026 at 1:12 AM ET |
-| **Status** | 42.40-CL-59086525-Windows |
+| **Last updated** | October 20, 2026 |
+| **Last checked** | October 20, 2026 at 10:26 PM PT |
+| **Status** | Fortnite+Release-42.40-CL-59343437 |
 | **Formats** | `offsets.h` · `offsets.json` |
 | **SDK Viewer** | [underscores.dev](https://underscores.dev/) |
 | **Contact** | [t.me/ReadAccess](https://t.me/ReadAccess) |
@@ -82,7 +82,7 @@ auto pawn          = Read<uintptr_t>(controller + offsets::player::LocalPawn);
 auto mesh          = Read<uintptr_t>(pawn + offsets::player::Mesh);
 ```
 
-`UWORLD` at `0x1BD9B9E8` is encrypted. There is no decrypt in this dump yet — use the chain above.
+`UWORLD` at `0x1B096DE8` is encrypted. There is no decrypt in this dump yet — use the chain above.
 
 If you load offsets at runtime instead of compiling them in, parse `offsets.json`. The keys match the C++ names.
 
@@ -98,19 +98,19 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 
 | Name | Offset | Label |
 |---|---|---|
-| **UWorld** (`UWORLD`) | `0x1BD9B9E8` | Encrypted `GWorld` RVA — listed for reference; use `gEngine` chain for `UWorld` |
-| **UEngine** (`gEngine`) | `0x1BD9D378` | Global `GEngine` pointer — `base + gEngine` |
+| **UWorld** (`UWORLD`) | `0x1B096DE8` | Encrypted `GWorld` RVA — listed for reference; use `gEngine` chain for `UWorld` |
+| **UEngine** (`gEngine`) | `0x1B098778` | Global `GEngine` pointer — `base + gEngine` |
 
 #### World chain
 
 | Name | Offset | Label |
 |---|---|---|
 | **GameViewport** | `0xB70` | `UEngine::GameViewport` |
-| **GameInstance** | `0x250` | `UWorld::OwningGameInstance` |
-| **GameState** | `0x1D8` | `UWorld::GameState` |
+| **GameInstance** | `0x248` | `UWorld::OwningGameInstance` |
+| **GameState** | `0x1D0` | `UWorld::GameState` |
 | **PersistentLevel** | `0x38` | `UWorld::PersistentLevel` |
-| **Levels** | `0x1F0` | `UWorld::Levels` |
-| **Actors** | `0x50` | `ULevelActorContainer::Actors` |
+| **Levels** | `0x1E8` | `UWorld::Levels` |
+| **Actors** | `0x218` | `ULevelActorContainer::Actors` |
 | **PlayerArray** | `0x288` | `AGameStateBase::PlayerArray` |
 | **ServerWorldTime** | `0x2A0` | `AGameStateBase::ServerWorldTimeSecondsDelta` |
 | **Seconds** | `0x198` | `UWorld::TimeSeconds` — `RotationPointer + 0x10` |
@@ -132,8 +132,8 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 | **BoneArray** | `0x660` | `USkeletalMeshComponent` bone `TArray` (primary) |
 | **BoneArray_cache** | `0x670` | `USkeletalMeshComponent` bone `TArray` (secondary) — always `BoneArray + 0x10` |
 | **CurrentReadComponentTransforms** | `0x48` | `USkeletalMeshComponent` active bone buffer index |
-| **CachedComponentSpaceTransforms** | `0xA10` | `USkeletalMeshComponent::CachedComponentSpaceTransforms` |
-| **LastRenderTime** | `0x2E0` | `UPrimitiveComponent::LastRenderTimeOnScreen` |
+| **CachedComponentSpaceTransforms** | `0xA00` | `USkeletalMeshComponent::CachedComponentSpaceTransforms` |
+| **LastRenderTime** | `0x548` | `UPrimitiveComponent::LastRenderTimeOnScreen` |
 
 #### Camera / view
 
@@ -180,15 +180,15 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 | Name | Offset | Label |
 |---|---|---|
 | **CurrentWeapon** | `0x9D0` | `AFortPawn::CurrentWeapon` |
-| **WeaponData** | `0x610` | `AFortWeapon::WeaponData` |
+| **WeaponData** | `0x648` | `AFortWeapon::WeaponData` |
 | **ItemName** | `0x38` | `UItemDefinitionBase::ItemName` |
-| **AmmoCount** | `0x10D8` | `AFortWeapon::AmmoCount` |
+| **AmmoCount** | `0x11B0` | `AFortWeapon::AmmoCount` |
 | **bIsReloadingWeapon** | `0x379` | `AFortWeapon::bIsReloadingWeapon` (bit 0) |
-| **LastFireTime** | `0xFDC` | `AFortWeapon::LastFireTime` |
-| **LastFireTimeVerified** | `0xFE4` | `AFortWeapon::LastFireTimeVerified` |
+| **LastFireTime** | `0x10B4` | `AFortWeapon::LastFireTime` |
+| **LastFireTimeVerified** | `0x10BC` | `AFortWeapon::LastFireTimeVerified` |
 | **LastDamagedTime** | `0xE18` | `AFortPawn::LastDamagedTime` |
-| **ProjectileSpeed** | `0x2148` | `AFortWeapon` projectile speed (float on weapon) |
-| **ProjectileGravity** | `0x214C` | `AFortWeapon::ProjectileGravityScale` — `ProjectileSpeed + 0x4` |
+| **ProjectileSpeed** | `0x20D4` | `AFortWeapon` projectile speed (float on weapon) |
+| **ProjectileGravity** | `0x20D8` | `AFortWeapon::ProjectileGravityScale` — `ProjectileSpeed + 0x4` |
 | **ComponentVelocity** | `0x188` | `USceneComponent::ComponentVelocity` (read from `RootComponent`) |
 
 ### Aim
@@ -232,7 +232,7 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 | **ItemDefinitionName** | `0x38` | `UItemDefinitionBase::ItemName` |
 | **ItemDefinitionDataList** | `0x68` | `UItemDefinitionBase::DataList` |
 | **WeaponDisplayTier** | `0x296` | `UFortWeaponItemDefinition::DisplayTier` |
-| **RarityStruct** | `0x1908F580` | `GRarityStruct` — module offset, not an absolute pointer |
+| **RarityStruct** | `0x183C4330` | `GRarityStruct` — module offset, not an absolute pointer |
 
 ---
 
@@ -296,7 +296,7 @@ These headers are examples of how the offsets are typically read. Copy what you 
 - **Names** — `PlayerName` is encrypted. Use the decrypt in `PlayerName.h`, do not treat it as a raw string.
 - **Visibility** — `VisCheck.h` treats a mesh as hidden if `Seconds - LastRenderTime > 0.06`.
 - **Ranked** — `HabaneroComponent` is on `PlayerState`. Ranked tier is read from that component (see `RankedProgress.h`).
-- **UWORLD** — The value at `0x1BD9B9E8` is encrypted. Decrypt is not in this repo yet. Use `gEngine` → GameViewport → `+0x78` for `UWorld`.
+- **UWORLD** — The value at `0x1B096DE8` is encrypted. Decrypt is not in this repo yet. Use `gEngine` → GameViewport → `+0x78` for `UWorld`.
 - **Validation** — Always null-check pointers (`UWorld`, pawn, mesh, weapon). A bad chain is the usual cause of crashes after an update.
 
 Offsets outdated? Ping **[@ReadAccess](https://t.me/ReadAccess)** on Telegram.
