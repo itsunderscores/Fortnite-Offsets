@@ -17,7 +17,7 @@
     "FOV":                  "0x37c",
     "ServerWorldTime":      "0x2B0",
     "LastRenderTime":       "0x328",
-    "PersistentLevel":      "0x40",
+    "PersistentLevel":      "0x38",
     "Levels":               "0x1D8",
     "Actors":               "0x1D8",
     "ReviveFromDBNOTime":   "0x4e30",
