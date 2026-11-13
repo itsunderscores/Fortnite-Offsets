@@ -1,4 +1,4 @@
-# Fortnite Offsets
+ve# Fortnite Offsets
 
 Up-to-date Unreal Engine offsets for Fortnite, dumped as both a C++ header (`offsets.h`) and JSON (`offsets.json`).
 
@@ -187,8 +187,8 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 | **LastFireTime** | `0x10dc` | `AFortWeapon::LastFireTime` |
 | **LastFireTimeVerified** | `0x10e4` | `AFortWeapon::LastFireTimeVerified` |
 | **LastDamagedTime** | `0xE40` | `AFortPawn::LastDamagedTime` |
-| **ProjectileSpeed** | `0x21e4` | `AFortWeapon` projectile speed (float on weapon) |
-| **ProjectileGravity** | `0x21e8` | `AFortWeapon::ProjectileGravityScale` — `ProjectileSpeed + 0x4` |
+| **ProjectileSpeed** | `0x2540` | `AFortWeapon` projectile speed (float on weapon) |
+| **ProjectileGravity** | `0x2544` | `AFortWeapon::ProjectileGravityScale` — `ProjectileSpeed + 0x4` |
 | **ComponentVelocity** | `0x188` | `USceneComponent::ComponentVelocity` (read from `RootComponent`) |
 
 ### Aim
