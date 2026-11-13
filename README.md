@@ -129,8 +129,8 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 
 | Name | Offset | Label |
 |---|---|---|
-| **BoneArray** | `0x660` | `USkeletalMeshComponent` bone `TArray` (primary) |
-| **BoneArray_cache** | `0x670` | `USkeletalMeshComponent` bone `TArray` (secondary) — always `BoneArray + 0x10` |
+| **BoneArray** | `0x650` | `USkeletalMeshComponent` bone `TArray` (primary) |
+| **BoneArray_cache** | `0x660` | `USkeletalMeshComponent` bone `TArray` (secondary) — always `BoneArray + 0x10` |
 | **CurrentReadComponentTransforms** | `0x48` | `USkeletalMeshComponent` active bone buffer index |
 | **CachedComponentSpaceTransforms** | `0xa40` | `USkeletalMeshComponent::CachedComponentSpaceTransforms` |
 | **LastRenderTime** | `0x328` | `UPrimitiveComponent::LastRenderTimeOnScreen` |
