@@ -98,22 +98,22 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 
 | Name | Offset | Label |
 |---|---|---|
-| **UWorld** (`UWORLD`) | `0x1C8E1578` | Encrypted `GWorld` RVA — listed for reference; use `gEngine` chain for `UWorld` |
-| **UEngine** (`gEngine`) | `0x1C8E2F48` | Global `GEngine` pointer — `base + gEngine` |
+| **UWorld** (`UWORLD`) | `0x1C9DA790` | Encrypted `GWorld` RVA — listed for reference; use `gEngine` chain for `UWorld` |
+| **UEngine** (`gEngine`) | `0x1C9DC1D8` | Global `GEngine` pointer — `base + gEngine` |
 
 #### World chain
 
 | Name | Offset | Label |
 |---|---|---|
 | **GameViewport** | `0xB70` | `UEngine::GameViewport` |
-| **GameInstance** | `0x248` | `UWorld::OwningGameInstance` |
-| **GameState** | `0x1D0` | `UWorld::GameState` |
+| **GameInstance** | `0x238` | `UWorld::OwningGameInstance` |
+| **GameState** | `0x1C0` | `UWorld::GameState` |
 | **PersistentLevel** | `0x40` | `UWorld::PersistentLevel` |
-| **Levels** | `0x1E8` | `UWorld::Levels` |
-| **Actors** | `0x208` | `ULevelActorContainer::Actors` |
+| **Levels** | `0x1D8` | `UWorld::Levels` |
+| **Actors** | `0x1D8` | `ULevelActorContainer::Actors` |
 | **PlayerArray** | `0x290` | `AGameStateBase::PlayerArray` |
 | **ServerWorldTime** | `0x2B0` | `AGameStateBase::ServerWorldTimeSecondsDelta` |
-| **Seconds** | `0x198` | `UWorld::TimeSeconds` — `RotationPointer + 0x10` |
+| **Seconds** | `0x188` | `UWorld::TimeSeconds` — `RotationPointer + 0x10` |
 
 #### Actor / component
 
@@ -132,24 +132,24 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 | **BoneArray** | `0x660` | `USkeletalMeshComponent` bone `TArray` (primary) |
 | **BoneArray_cache** | `0x670` | `USkeletalMeshComponent` bone `TArray` (secondary) — always `BoneArray + 0x10` |
 | **CurrentReadComponentTransforms** | `0x48` | `USkeletalMeshComponent` active bone buffer index |
-| **CachedComponentSpaceTransforms** | `0x9C8` | `USkeletalMeshComponent::CachedComponentSpaceTransforms` |
-| **LastRenderTime** | `0x2E8` | `UPrimitiveComponent::LastRenderTimeOnScreen` |
+| **CachedComponentSpaceTransforms** | `0xa40` | `USkeletalMeshComponent::CachedComponentSpaceTransforms` |
+| **LastRenderTime** | `0x328` | `UPrimitiveComponent::LastRenderTimeOnScreen` |
 
 #### Camera / view
 
 | Name | Offset | Label |
 |---|---|---|
-| **LocationPointer** | `0x178` | `UWorld` camera location pointer (view chain) |
-| **RotationPointer** | `0x188` | `UWorld` camera rotation pointer (view chain) |
+| **LocationPointer** | `0x168` | `UWorld` camera location pointer (view chain) |
+| **RotationPointer** | `0x178` | `UWorld` camera rotation pointer (view chain) |
 | **FOV** | `0x37C` | `APlayerController` FOV scalar (degrees / 90) |
 
 #### Misc actor checks
 
 | Name | Offset | Label |
 |---|---|---|
-| **ReviveFromDBNOTime** | `0x4E20` | `AFortPlayerPawnAthena::ReviveFromDBNOTime` |
-| **LifespanAfterDeath** | `0x10B8` | `AFortAthenaVehicle::LifespanAfterDeath` |
-| **ServerCriticalHealth** | `0x1C3C` | `AFortAthenaVehicle::ServerCriticalHealth` |
+| **ReviveFromDBNOTime** | `0x4e30` | `AFortPlayerPawnAthena::ReviveFromDBNOTime` |
+| **LifespanAfterDeath** | `0x10d0` | `AFortAthenaVehicle::LifespanAfterDeath` |
+| **ServerCriticalHealth** | `0x1c5c` | `AFortAthenaVehicle::ServerCriticalHealth` |
 
 ### Player
 
@@ -169,7 +169,7 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 | **Platform** | `0x408` | `AFortPlayerState::Platform` |
 | **HabaneroComponent** | `0x920` | `AFortPlayerState::HabaneroComponent` |
 | **bIsDying** | `0x738` | `AFortPawn::bIsDying` (bit 5) |
-| **bIsDBNO** | `0x881` | `AFortPawn::bIsDBNO` (bit 0) |
+| **bIsDBNO** | `0x892` | `AFortPawn::bIsDBNO` (bit 0) |
 | **bIsABot** | `0x282` | `APlayerState::bIsABot` (bit 3) |
 | **bIsCrouched** | `0x440` | `ACharacter::bIsCrouched` (bit 0) |
 
@@ -180,12 +180,12 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 | Name | Offset | Label |
 |---|---|---|
 | **CurrentWeapon** | `0x9E0` | `AFortPawn::CurrentWeapon` |
-| **WeaponData** | `0x650` | `AFortWeapon::WeaponData` |
+| **WeaponData** | `0x6d0` | `AFortWeapon::WeaponData` |
 | **ItemName** | `0x38` | `UItemDefinitionBase::ItemName` |
-| **AmmoCount** | `0x1138` | `AFortWeapon::AmmoCount` |
-| **bIsReloadingWeapon** | `0x391` | `AFortWeapon::bIsReloadingWeapon` (bit 0) |
-| **LastFireTime** | `0x1034` | `AFortWeapon::LastFireTime` |
-| **LastFireTimeVerified** | `0x103C` | `AFortWeapon::LastFireTimeVerified` |
+| **AmmoCount** | `0x11e0` | `AFortWeapon::AmmoCount` |
+| **bIsReloadingWeapon** | `0x379` | `AFortWeapon::bIsReloadingWeapon` (bit 0) |
+| **LastFireTime** | `0x10dc` | `AFortWeapon::LastFireTime` |
+| **LastFireTimeVerified** | `0x10e4` | `AFortWeapon::LastFireTimeVerified` |
 | **LastDamagedTime** | `0xE40` | `AFortPawn::LastDamagedTime` |
 | **ProjectileSpeed** | `0x21e4` | `AFortWeapon` projectile speed (float on weapon) |
 | **ProjectileGravity** | `0x21e8` | `AFortWeapon::ProjectileGravityScale` — `ProjectileSpeed + 0x4` |
@@ -197,13 +197,13 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 
 | Name | Offset | Label |
 |---|---|---|
-| **TargetedFortPawn** | `0x1740` | `AFortPlayerController::TargetedFortPawn` |
-| **LocationUnderReticle** | `0x2208` | `AFortPlayerController::LocationUnderReticle` |
+| **TargetedFortPawn** | `0x1750` | `AFortPlayerController::TargetedFortPawn` |
+| **LocationUnderReticle** | `0x2218` | `AFortPlayerController::LocationUnderReticle` |
 | **NetConnection** | `0x4B0` | `APlayerController::NetConnection` |
 | **RotationInput** | `0x4B8` | Rotation write — `NetConnection + 0x08` |
-| **WeaponOffsetCorrection** | `0x23C0` | `AFortPlayerController::WeaponOffsetCorrection` |
-| **WeaponRecoilOffset** | `0x23A8` | `AFortPlayerController::WeaponRecoilOffset` |
-| **PlayerAimOffset** | `0x2390` | `AFortPlayerController::PlayerAimOffset` |
+| **WeaponOffsetCorrection** | `0x23d0` | `AFortPlayerController::WeaponOffsetCorrection` |
+| **WeaponRecoilOffset** | `0x23b8` | `AFortPlayerController::WeaponRecoilOffset` |
+| **PlayerAimOffset** | `0x23a0` | `AFortPlayerController::PlayerAimOffset` |
 
 ### Loot
 
@@ -232,7 +232,7 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 | **ItemDefinitionName** | `0x38` | `UItemDefinitionBase::ItemName` |
 | **ItemDefinitionDataList** | `0x68` | `UItemDefinitionBase::DataList` |
 | **WeaponDisplayTier** | `0x296` | `UFortWeaponItemDefinition::DisplayTier` |
-| **RarityStruct** | `0x1C8E1578` | `GRarityStruct` — module offset, not an absolute pointer |
+| **RarityStruct** | `0x19C10580` | `GRarityStruct` — module offset, not an absolute pointer |
 
 ---
 
