@@ -52,8 +52,8 @@
     "LastFireTime":          "0x10dc",
     "LastFireTimeVerified":  "0x10e4",
     "LastDamagedTime":       "0xE40",
-    "ProjectileSpeed":       "0x21e4",
-    "ProjectileGravity":     "0x21e8",
+    "ProjectileSpeed":       "0x2540",
+    "ProjectileGravity":     "0x2544",
     "ComponentVelocity":     "0x188"
   },
   "aim": {
