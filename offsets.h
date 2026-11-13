@@ -17,7 +17,7 @@ namespace offsets {
         constexpr std::uintptr_t FOV = 0x37c;
         constexpr std::uintptr_t ServerWorldTime = 0x2B0;
         constexpr std::uintptr_t LastRenderTime = 0x328;
-        constexpr std::uintptr_t PersistentLevel = 0x40;
+        constexpr std::uintptr_t PersistentLevel = 0x38;
         constexpr std::uintptr_t Levels = 0x1D8;
         constexpr std::uintptr_t Actors = 0x1D8;
         constexpr std::uintptr_t ReviveFromDBNOTime = 0x4e30;
