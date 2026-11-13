@@ -7,8 +7,8 @@ namespace offsets {
         constexpr std::uintptr_t GameState = 0x1C0; // UWorld::GameState
         constexpr std::uintptr_t RootComponent = 0x1B0; // AActor::RootComponent
         constexpr std::uintptr_t ComponentToWorld = 0x1E0; // USceneComponent::ComponentToWorld
-        constexpr std::uintptr_t BoneArray = 0x660; // BoneArray (calculated)
-        constexpr std::uintptr_t BoneArray_cache = 0x670; // BoneArray_cache (calculated)
+        constexpr std::uintptr_t BoneArray = 0x650; // BoneArray (calculated)
+        constexpr std::uintptr_t BoneArray_cache = 0x660; // BoneArray_cache (calculated)
         constexpr std::uintptr_t PlayerArray = 0x290; // PlayerArray (calculated)
         constexpr std::uintptr_t RelativeLocation = 0x140; // USceneComponent::RelativeLocation
         constexpr std::uintptr_t LocationPointer = 0x168; // LocationPointer (calculated)
