@@ -108,7 +108,7 @@ Values are copied from `offsets.h`. Globals (`UWORLD`, `gEngine`) are relative t
 | **GameViewport** | `0xB70` | `UEngine::GameViewport` |
 | **GameInstance** | `0x238` | `UWorld::OwningGameInstance` |
 | **GameState** | `0x1C0` | `UWorld::GameState` |
-| **PersistentLevel** | `0x40` | `UWorld::PersistentLevel` |
+| **PersistentLevel** | `0x38` | `UWorld::PersistentLevel` |
 | **Levels** | `0x1D8` | `UWorld::Levels` |
 | **Actors** | `0x1D8` | `ULevelActorContainer::Actors` |
 | **PlayerArray** | `0x290` | `AGameStateBase::PlayerArray` |
