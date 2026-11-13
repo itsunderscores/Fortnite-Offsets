@@ -2,29 +2,29 @@ namespace offsets {
     namespace core {
         constexpr std::uintptr_t UWORLD = 0x1C9DA790; // GWorld
         constexpr std::uintptr_t gEngine = 0x1C9DC1D8; // GEngine
-        constexpr std::uintptr_t GameViewport = 0xB70; // UEngine::GameViewport
+        constexpr std::uintptr_t GameViewport = 0xB70; // GameViewport (calculated)
         constexpr std::uintptr_t GameInstance = 0x238; // UWorld::OwningGameInstance
         constexpr std::uintptr_t GameState = 0x1C0; // UWorld::GameState
         constexpr std::uintptr_t RootComponent = 0x1B0; // AActor::RootComponent
         constexpr std::uintptr_t ComponentToWorld = 0x1E0; // USceneComponent::ComponentToWorld
-        constexpr std::uintptr_t BoneArray = 0x660; // USkinnedMeshComponent::BoneArray
-        constexpr std::uintptr_t BoneArray_cache = 0x670; // USkinnedMeshComponent::BoneArrayCache
-        constexpr std::uintptr_t PlayerArray = 0x290; // AGameStateBase::PlayerArray
+        constexpr std::uintptr_t BoneArray = 0x660; // BoneArray (calculated)
+        constexpr std::uintptr_t BoneArray_cache = 0x670; // BoneArray_cache (calculated)
+        constexpr std::uintptr_t PlayerArray = 0x290; // PlayerArray (calculated)
         constexpr std::uintptr_t RelativeLocation = 0x140; // USceneComponent::RelativeLocation
-        constexpr std::uintptr_t LocationPointer = 0x168; // Camera location pointer
-        constexpr std::uintptr_t RotationPointer = 0x178; // Camera rotation pointer
-        constexpr std::uintptr_t Seconds = 0x188; // UWorld::TimeSeconds
-        constexpr std::uintptr_t FOV = 0x37c; // FMinimalViewInfo::FOV
+        constexpr std::uintptr_t LocationPointer = 0x168; // LocationPointer (calculated)
+        constexpr std::uintptr_t RotationPointer = 0x178; // RotationPointer (calculated)
+        constexpr std::uintptr_t Seconds = 0x188; // Seconds (calculated)
+        constexpr std::uintptr_t FOV = 0x37c; // FOV (calculated)
         constexpr std::uintptr_t ServerWorldTime = 0x2B0; // AGameStateBase::ServerWorldTimeSeconds
-        constexpr std::uintptr_t LastRenderTime = 0x328; // UPrimitiveComponent::LastRenderTimeOnScreen
+        constexpr std::uintptr_t LastRenderTime = 0x328; // LastRenderTime (calculated)
         constexpr std::uintptr_t PersistentLevel = 0x40; // UWorld::PersistentLevel
-        constexpr std::uintptr_t Levels = 0x1D8; // UWorld::Levels
-        constexpr std::uintptr_t Actors = 0x1D8; // ULevel::Actors
+        constexpr std::uintptr_t Levels = 0x1D8; // Levels (calculated)
+        constexpr std::uintptr_t Actors = 0x1D8; // Actors (calculated)
         constexpr std::uintptr_t ReviveFromDBNOTime = 0x4e30; // AFortPlayerPawnAthena::ReviveFromDBNOTime
         constexpr std::uintptr_t LifespanAfterDeath = 0x10d0; // AFortAthenaVehicle::LifespanAfterDeath
         constexpr std::uintptr_t ServerCriticalHealth = 0x1c5c; // AFortAthenaVehicle::ServerCriticalHealth
         constexpr std::uintptr_t CachedComponentSpaceTransforms = 0xa40; // USkinnedMeshComponent::CachedComponentSpaceTransforms
-        constexpr std::uintptr_t CurrentReadComponentTransforms = 0x48; // USkinnedMeshComponent::CurrentReadComponentTransforms
+        constexpr std::uintptr_t CurrentReadComponentTransforms = 0x48; // CurrentReadComponentTransforms (calculated)
     }
 
     namespace player {
@@ -35,7 +35,7 @@ namespace offsets {
         constexpr std::uintptr_t PawnPrivate = 0x2F0; // APlayerState::PawnPrivate
         constexpr std::uintptr_t PlayerState = 0x298; // APawn::PlayerState
         constexpr std::uintptr_t TeamIndex = 0xF81; // AFortPlayerStateAthena::TeamIndex
-        constexpr std::uintptr_t PlayerName = 0x9F0; // APlayerState::PlayerNamePrivate
+        constexpr std::uintptr_t PlayerName = 0x9F0; // PlayerName (calculated)
         constexpr std::uintptr_t KillScore = 0xF98; // AFortPlayerStateAthena::KillScore
         constexpr std::uintptr_t Platform = 0x408; // AFortPlayerState::Platform
         constexpr std::uintptr_t bIsDying = 0x738; // AFortPawn::bIsDying
@@ -62,7 +62,7 @@ namespace offsets {
     namespace aim {
         constexpr std::uintptr_t TargetedFortPawn = 0x1750; // AFortPlayerController::TargetedFortPawn
         constexpr std::uintptr_t LocationUnderReticle = 0x2218; // AFortPlayerController::LocationUnderReticle
-        constexpr std::uintptr_t NetConnection = 0x4B0; // UNetConnection
+        constexpr std::uintptr_t NetConnection = 0x4B0; // NetConnection (calculated)
         constexpr std::uintptr_t RotationInput = 0x4B8; // APlayerController::RotationInput
         constexpr std::uintptr_t WeaponOffsetCorrection = 0x23d0; // AFortWeapon::WeaponOffsetCorrection
         constexpr std::uintptr_t WeaponRecoilOffset = 0x23b8; // AFortWeapon::WeaponRecoilOffset
