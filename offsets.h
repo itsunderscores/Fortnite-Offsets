@@ -54,8 +54,8 @@ namespace offsets {
         constexpr std::uintptr_t LastFireTime = 0x10dc; // AFortWeapon::LastFireTime
         constexpr std::uintptr_t LastFireTimeVerified = 0x10e4; // AFortWeapon::LastFireTimeVerified
         constexpr std::uintptr_t LastDamagedTime = 0xE40; // AFortWeapon::LastDamagedTime
-        constexpr std::uintptr_t ProjectileSpeed = 0x21e4; // UProjectileMovementComponent::InitialSpeed
-        constexpr std::uintptr_t ProjectileGravity = 0x21e8; // UProjectileMovementComponent::ProjectileGravityScale
+        constexpr std::uintptr_t ProjectileSpeed = 0x2540; // UProjectileMovementComponent::InitialSpeed
+        constexpr std::uintptr_t ProjectileGravity = 0x2544; // UProjectileMovementComponent::ProjectileGravityScale
         constexpr std::uintptr_t ComponentVelocity = 0x188; // USceneComponent::ComponentVelocity
     }
 
